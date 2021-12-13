@@ -54,7 +54,7 @@ def move():
     MY_DIRECTION = request.json['arena']["state"][me]['direction']
     size = request.json["arena"]["dims"]
     size_y = size[1]
-    state = request_data["arena"]["state"]
+    state = request.json["arena"]["state"]
     for player, info in state.items():
         players_y = info.get('y')
         players_x = info.get('x')
