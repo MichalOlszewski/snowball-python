@@ -25,7 +25,7 @@ logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
-moves = ['F', 'L', 'R', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', "T", 'T', "T", "T"]
+moves = ['F', 'L', 'R']
 
 is_set = False
 throw = True
@@ -37,23 +37,24 @@ def index():
     return "Let the battle begin!"
 
 @app.route("/", methods=['POST'])
-@app.route("/", methods=['POST'])
 def move():
-    request_data = request.get_json()
-    MY_X = None
-    MY_Y = None
-    MY_DIRECTION = None
-
-    # logger.info(request.json)
-    # players = request_data["arena"]["state"].keys()
-
+    global is_set
+    global throw
+    global forward
+    global move_me
+    request.get_data()
+    logger.info(request.json)
+    if throw:
+        throw = False
+        return 'T'
+    throw = True
+    me = request.json["_links"]["self"]["href"]
+    MY_X = request.json['arena']["state"][me]['x']
+    MY_Y = request.json['arena']["state"][me]['y']
+    MY_DIRECTION = request.json['arena']["state"][me]['direction']
+    size = request.json["arena"]["dims"]
+    size_y = size[1]
     state = request_data["arena"]["state"]
-    for player, info in state.items():
-        if player == MY_SERVICE:
-            MY_X = info.get('x')
-            MY_Y = info.get('y')
-            MY_DIRECTION = info.get('direction')
-
     for player, info in state.items():
         players_y = info.get('y')
         players_x = info.get('x')
