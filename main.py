@@ -25,7 +25,7 @@ logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
-moves = ['F', 'L', 'R', 'T']
+moves = ['F', 'L', 'R', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', "T", 'T', "T", "T"]
 
 is_set = False
 throw = True
@@ -38,29 +38,10 @@ def index():
 
 @app.route("/", methods=['POST'])
 def move():
-    global is_set
-    global throw
-    global forward
-    global move_me
     request.get_data()
     logger.info(request.json)
-    if throw:
-        throw = False
-        return 'T'
-    throw = True
-    me = request.json["_links"]["self"]["href"]
-    x = request.json['arena']["state"][me]['x']
-    if x == 0:
-        is_set = True
-    y = request.json['arena']["state"][me]['y']
-    direction = request.json['arena']["state"][me]['direction']
-    size = request.json["arena"]["dims"]
-    size_y = size[1]
+
     return moves[random.randint(0,len(moves))]
-
-
-
-    return "T"
 
 if __name__ == "__main__":
   app.run(debug=False,host='0.0.0.0',port=int(os.environ.get('PORT', 8080)))
