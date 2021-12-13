@@ -35,11 +35,15 @@ def index():
 def move():
     request.get_data()
     logger.info(request.json)
-    me = request.json["_links"]["self"]["href"]
-    MY_X = request.json['arena']["state"][me]['x']
-    MY_Y = request.json['arena']["state"][me]['y']
-    MY_DIRECTION = request.json['arena']["state"][me]['direction']
-    state = request.json["arena"]["state"]
+    request_data = request.get_json()
+    try:
+        me = request.json["_links"]["self"]["href"]
+        MY_X = request.json['arena']["state"][me]['x']
+        MY_Y = request.json['arena']["state"][me]['y']
+        MY_DIRECTION = request.json['arena']["state"][me]['direction']
+    except:
+        return 'T'
+    state = request_data["arena"]["state"]
     for player, info in state.items():
         players_y = info.get('y')
         players_x = info.get('x')
