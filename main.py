@@ -17,6 +17,7 @@ import os
 import logging
 import random
 from flask import Flask, request
+from google.cloud import bigquery
 
 
 
@@ -55,39 +56,9 @@ def move():
     direction = request.json['arena']["state"][me]['direction']
     size = request.json["arena"]["dims"]
     size_y = size[1]
-    if y == 0:
-        move = "R"
-    if y == size_y or size_y - 1:
-        move = "L"
-    if not is_set:
-        if direction == "N" and x != 0:
-            return "L"
-        if direction == "S" and x != 0:
-            return 'R'
-        if direction == "W" and x != 0:
-            return 'F'
-        if direction == "W":
-            return 'R'
-        if direction == "N":
-            return "R"
-        if direction == "S":
-            return 'L'
-        if direction == "E" and x != 0:
-            return "L"
-    else:
-        if direction == "W" or direction == "E":
-            forward = True
-            return move
-        if direction == "N":
-            if forward:
-                forward = False
-                return "F"
-            return 'R'
-        if direction == "S":
-            if forward:
-                forward = False
-                return "F"
-            return "L"
+    return moves[random.randint(0,len(moves))]
+
+
 
     return "T"
 
