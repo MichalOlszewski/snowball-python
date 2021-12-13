@@ -64,8 +64,7 @@ def move():
             if MY_X == players_x:
                 if players_y < MY_Y and MY_DIRECTION == 'N' and abs(players_y - MY_Y) <= 3:
                     return "T"
-                elif players_y < MY_Y and MY_DIRECTION == 'S':
-                    return "L"
+
                 elif players_y > MY_Y and MY_DIRECTION == 'S' and abs(players_y - MY_Y) <= 3:
                     return "T"
             if MY_Y == players_y:
@@ -73,8 +72,23 @@ def move():
                     return "T"
                 elif players_x > MY_X and MY_DIRECTION == 'E' and abs(players_x - MY_X) <= 3:
                     return "T"
-                elif players_x < MY_X and MY_DIRECTION == 'E':
+
+            if MY_X == players_x:
+                if players_y < MY_Y and MY_DIRECTION == 'N' and abs(players_y - MY_Y) <= 5:
+                    return "F"
+
+                elif players_y > MY_Y and MY_DIRECTION == 'S' and abs(players_y - MY_Y) <= 5:
+                    return "F"
+                if players_y < MY_Y and MY_DIRECTION == 'S':
+                    return "L"
+            if MY_Y == players_y:
+                if players_x < MY_X and MY_DIRECTION == 'W' and abs(players_x - MY_X) <= 5:
+                    return "F"
+                elif players_x > MY_X and MY_DIRECTION == 'E' and abs(players_x - MY_X) <= 5:
+                    return "F"
+                if players_x < MY_X and MY_DIRECTION == 'E':
                     return 'L'
+
 
     return moves[random.randrange(len(moves))]
 
