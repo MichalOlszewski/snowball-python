@@ -89,6 +89,26 @@ def move():
                 if players_x < MY_X and MY_DIRECTION == 'E':
                     return 'L'
 
+        for player, info in state.items():
+            players_y = info.get('y')
+            players_x = info.get('x')
+            if info.get('wasHit') is True:
+                continue
+            else:
+                if MY_X == players_x:
+                    if players_y < MY_Y and MY_DIRECTION == 'N' and abs(players_y - MY_Y) <= 5:
+                        return "F"
+
+                    elif players_y > MY_Y and MY_DIRECTION == 'S' and abs(players_y - MY_Y) <= 5:
+                        return "F"
+
+                if MY_Y == players_y:
+                    if players_x < MY_X and MY_DIRECTION == 'W' and abs(players_x - MY_X) <= 5:
+                        return "F"
+                    elif players_x > MY_X and MY_DIRECTION == 'E' and abs(players_x - MY_X) <= 5:
+                        return "F"
+
+
 
     return moves[random.randrange(len(moves))]
 
